@@ -71,7 +71,6 @@ class LinkedList:
         if index == self._nodes_counter:
             return self.append(value)
 
-        # Поиск предыдущего узла
         prev = self._head
         for _ in range(index - 1):
             prev = prev.next
