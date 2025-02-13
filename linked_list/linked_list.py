@@ -106,21 +106,20 @@ class LinkedList:
         self._nodes_counter -= 1
 
         if self._head == self._tail:
-            popped = self._tail
+            value = self._tail.value
             self._head = self._tail = None
-            return popped.value
+            return value
 
         temp = self._head
 
-        for i in range(len(self)):
-            if temp.next == self._tail:
-                break
+        while temp != self._tail:
             temp = temp.next
-        result = self._tail
+
+        value = self._tail.value
         self._tail = temp
         self._tail.next = None
 
-        return result.value
+        return value
 
     def pop_front(self):
         if self._nodes_counter == 0:
