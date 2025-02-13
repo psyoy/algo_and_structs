@@ -22,7 +22,7 @@ class LinkedList:
         while node:
             nodes.append(str(node.value))
             node = node.next
-        return "->".join(nodes)
+        return "[" + " -> ".join(nodes) + "]"
 
     def __getitem__(self, index):
         if index < 0:
@@ -80,7 +80,7 @@ class LinkedList:
             raise IndexError("index out of range")
 
         if index == self._nodes_counter:
-            return self.append(value)
+            self.append(value)
 
         node = Node(value)
 
@@ -120,7 +120,7 @@ class LinkedList:
         self._tail = temp
         self._tail.next = None
 
-        return result
+        return result.value
 
     def pop_front(self):
         if self._nodes_counter == 0:
@@ -130,7 +130,8 @@ class LinkedList:
             result = self._head
             self._head = self._head.next
 
-            return result
+            return result.value
+
 
 if __name__ == "__main__":
     l = LinkedList()
@@ -143,10 +144,10 @@ if __name__ == "__main__":
     l.insert(0, 1000000)
 
     a = l.pop()
-    print("popped", a.value)
+    print("popped", a)
 
     b = l.pop_front()
-    print("popped front", b.value)
+    print("popped front", b)
 
     for n in l:
         print(n)
