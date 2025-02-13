@@ -110,3 +110,19 @@ class LinkedList:
             self._tail = None
 
         return value
+
+
+if __name__ == "__main__":
+    l = LinkedList()
+    l.append(1)
+    l.append(2)
+    l.prepend(0)
+    l.insert(3, 3)
+    l.insert(0, -1)
+    l.insert(2, 0.5)
+
+    print(l)
+    print(l.pop())  # 3
+    print(l.pop_front())
+    print(l[-1])
+    print(len(l))
