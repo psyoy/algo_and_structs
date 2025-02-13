@@ -3,10 +3,8 @@ class Node:
         self.value = value
         self.next = None
 
+
 class LinkedList:
-    """
-    Класс, реализующий односвязный список
-    """
     def __init__(self):
         self._head = None
         self._tail = None
@@ -22,20 +20,17 @@ class LinkedList:
         while node:
             nodes.append(str(node.value))
             node = node.next
-        return "[" + " -> ".join(nodes) + "]"
+        return "[" + " -> ".join(nodes) + "]" if nodes else "[]"
 
     def __getitem__(self, index):
         if index < 0:
             index += len(self)
-
-        if index >= self._nodes_counter:
+        if index < 0 or index >= self._nodes_counter:
             raise IndexError('index out of range')
 
         temp = self._head
-
-        for ind in range(index):
+        for _ in range(index):
             temp = temp.next
-
         return temp.value
 
     def __iter__(self):
@@ -51,108 +46,68 @@ class LinkedList:
 
     def prepend(self, value):
         node = Node(value)
-
-        self._nodes_counter += 1
-
         if self._head is None:
-            self._head = node
-            self._tail = node
+            self._head = self._tail = node
         else:
-            temp = self._head
+            node.next = self._head
             self._head = node
-            self._head.next = temp
+        self._nodes_counter += 1
 
     def append(self, value):
         node = Node(value)
-
-        self._nodes_counter += 1
-
         if self._head is None:
-            self._head = node
-            self._tail = node
+            self._head = self._tail = node
         else:
-            temp = self._tail
-            temp.next = node
+            self._tail.next = node
             self._tail = node
+        self._nodes_counter += 1
 
     def insert(self, index, value):
         if index < 0 or index > self._nodes_counter:
             raise IndexError("index out of range")
 
+        if index == 0:
+            return self.prepend(value)
         if index == self._nodes_counter:
-            self.append(value)
+            return self.append(value)
+
+        # Поиск предыдущего узла
+        prev = self._head
+        for _ in range(index - 1):
+            prev = prev.next
 
         node = Node(value)
-
+        node.next = prev.next
+        prev.next = node
         self._nodes_counter += 1
-
-        temp = self._head
-
-        if index == 0:
-            node.next = temp
-            self._head = node
-            return
-
-        for ind in range(index - 1):
-            temp = temp.next
-
-        node.next = temp.next
-        temp.next = node
 
     def pop(self):
         if self._nodes_counter == 0:
-            raise IndexError
-
-        self._nodes_counter -= 1
+            raise IndexError("pop from empty list")
 
         if self._head == self._tail:
-            value = self._tail.value
+            value = self._head.value
             self._head = self._tail = None
-            return value
+        else:
+            prev = self._head
+            while prev.next != self._tail:
+                prev = prev.next
+            value = self._tail.value
+            prev.next = None
+            self._tail = prev
 
-        temp = self._head
-
-        while temp != self._tail:
-            temp = temp.next
-
-        value = self._tail.value
-        self._tail = temp
-        self._tail.next = None
-
+        self._nodes_counter -= 1
         return value
 
     def pop_front(self):
         if self._nodes_counter == 0:
-            raise IndexError
-        else:
-            self._nodes_counter -= 1
-            result = self._head
-            self._head = self._head.next
+            raise IndexError("pop from empty list")
 
-            return result.value
+        value = self._head.value
+        self._head = self._head.next
+        self._nodes_counter -= 1
 
+        if self._nodes_counter == 0:
+            self._tail = None
 
-if __name__ == "__main__":
-    l = LinkedList()
-
-    l.append(74)
-    l.append(30)
-    l.append(111)
-    l.append(112)
-    l.prepend(0)
-    l.insert(0, 1000000)
-
-    a = l.pop()
-    print("popped", a)
-
-    b = l.pop_front()
-    print("popped front", b)
-
-    for n in l:
-        print(n)
-
-    print(f'last item = {l[-1]}')
-
-    print(f'Length = {len(l)}')
-
-    print(l)
+        return value
