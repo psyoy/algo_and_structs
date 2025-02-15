@@ -25,7 +25,7 @@ class LinkedList:
     """
     Класс, реализующий односвязный список
     """
-    def __init__(self) -> None:
+    def __init__(self):
         self._head = None
         self._tail = None
         self._nodes_counter = 0
