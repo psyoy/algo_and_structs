@@ -1,20 +1,20 @@
 """
     Модуль linked_list реализует односвязный список
 """
-
+from typing import Any
 
 class Node:
     """
     Класс для реализации узла односвязного списка
     """
-    def __init__(self, value=None) -> None:
+    def __init__(self, value: Any) -> None:
         self._value = value
         self.next = None
 
     def get_value(self):
         return self._value
 
-    def set_value(self, value):
+    def set_value(self, value: Any):
         self._value = value
 
 
@@ -58,7 +58,7 @@ class LinkedList:
         """
         return self.find_by_index(index)
 
-    def __setitem__(self, key: int, value) -> None:
+    def __setitem__(self, key: int, value: Any) -> None:
         """
         Магический метод, который устанавливает значение узла по его индексу
 
@@ -89,7 +89,7 @@ class LinkedList:
         self._current = self._current.next
         return value
 
-    def prepend(self, value) -> None:
+    def prepend(self, value: Any) -> None:
         """
         Метод, который принимает значение, создает узел с этим значение
         и добавляет узел в начало списка
@@ -105,7 +105,7 @@ class LinkedList:
             self._head = node
         self._nodes_counter += 1
 
-    def append(self, value) -> None:
+    def append(self, value: Any) -> None:
         """
         Метод, который создает узел по значению и
         добавляет узел в конец связного списка
@@ -120,7 +120,7 @@ class LinkedList:
             self._tail = node
         self._nodes_counter += 1
 
-    def insert(self, index: int, value) -> None:
+    def insert(self, index: int, value: Any) -> None:
         """
         Вставляет в связный список узел по индексу
         :param index: индекс
@@ -145,7 +145,7 @@ class LinkedList:
         prev.next = node
         self._nodes_counter += 1
 
-    def pop(self):
+    def pop(self) -> Any:
         """
         Метод, который извлекает(удаляет) последний узел связного списка
         и возвращает значение его атрибута value
@@ -167,7 +167,7 @@ class LinkedList:
         self._nodes_counter -= 1
         return value
 
-    def pop_front(self):
+    def pop_front(self) -> Any:
         """
         Метод, который извлекает(удаляет) первый узел связного списка
         и возвращает значение его атрибута value
@@ -185,7 +185,7 @@ class LinkedList:
 
         return value
 
-    def find_by_index(self, index: int):
+    def find_by_index(self, index: int) -> Any:
         """
         Метод, который находит по индексу узел связного списка
         и возвращает значение его атрибута value
