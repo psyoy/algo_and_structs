@@ -11,10 +11,12 @@ class Node:
         self._value = value
         self.next = None
 
-    def get_value(self):
+    @property
+    def value(self):
         return self._value
 
-    def set_value(self, value: Any):
+    @value.setter
+    def value(self, value: Any):
         self._value = value
 
 
@@ -46,11 +48,11 @@ class LinkedList:
         nodes = []
         node = self._head
         while node:
-            nodes.append(str(node.get_value()))
+            nodes.append(str(node.value))
             node = node.next
         return "[" + " -> ".join(nodes) + "]" if nodes else "[]"
 
-    def __getitem__(self, index: int) -> int:
+    def __getitem__(self, index: int) -> Any:
         """
         Магический метод
         :param index: индекс, по которому нужно найти элемент списка
@@ -76,7 +78,7 @@ class LinkedList:
         for _ in range(key):
             temp = temp.next
 
-        temp.set_value(value)
+        temp.value = value
 
     def __iter__(self):
         self._current = self._head
@@ -85,7 +87,7 @@ class LinkedList:
     def __next__(self):
         if self._current is None:
             raise StopIteration
-        value = self._current.get_value()
+        value = self._current.value
         self._current = self._current.next
         return value
 
@@ -132,9 +134,11 @@ class LinkedList:
             raise IndexError("index out of range")
 
         if index == 0:
-            return self.prepend(value)
+            self.prepend(value)
+            return
         if index == self._nodes_counter:
-            return self.append(value)
+            self.append(value)
+            return
 
         prev = self._head
         for _ in range(index - 1):
@@ -154,13 +158,13 @@ class LinkedList:
             raise IndexError("pop from empty list")
 
         if self._head == self._tail:
-            value = self._head.get_value()
+            value = self._head.value
             self._head = self._tail = None
         else:
             prev = self._head
             while prev.next != self._tail:
                 prev = prev.next
-            value = self._tail.get_value()
+            value = self._tail.value
             prev.next = None
             self._tail = prev
 
@@ -176,7 +180,7 @@ class LinkedList:
         if self._nodes_counter == 0:
             raise IndexError("pop from empty list")
 
-        value = self._head.get_value()
+        value = self._head.value
         self._head = self._head.next
         self._nodes_counter -= 1
 
@@ -201,7 +205,7 @@ class LinkedList:
         temp = self._head
         for _ in range(index):
             temp = temp.next
-        return temp.get_value()
+        return temp.value
 
     def remove(self, index: int) -> None:
         """
@@ -259,4 +263,7 @@ if __name__ == "__main__":
 
     print(l)
     l.remove(1)
+    print(l)
+
+    l.clear()
     print(l)
