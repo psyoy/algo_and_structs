@@ -1,15 +1,30 @@
 from typing import List
 
-def binary_search(unsorted_list: List[int], target: int, left: int = 0, right: int = 0) -> int:
-    middle = unsorted_list[len(unsorted_list) // 2]
+def binary_search(sorted_list: List[int], target: int, left: int = 0, right: int = None) -> int:
+    """
+    Рекурсивная реализация бинарного поиска.
 
-    if middle == target:
-        return 0
+    :param sorted_list: Отсортированный список целых чисел.
+    :param target: Искомое значение.
+    :param left: Левая граница диапазона поиска (по умолчанию 0).
+    :param right: Правая граница диапазона поиска (по умолчанию len(sorted_list) - 1).
 
-    return 1
+    :return: Индекс элемента, если найден; иначе -1.
+    """
 
+    if right is None:
+        right = len(sorted_list) - 1
 
-if __name__ == "__main__":
-    a = [3, 1, 5, 4, 23]
-    a.sort()
-    binary_search(a, 5)
+    if left > right:
+        return -1
+
+    mid = left + (right - left) // 2
+
+    if sorted_list[mid] == target:
+        return mid
+
+    elif sorted_list[mid] < target:
+        return binary_search(sorted_list, target, left=mid + 1, right=right)
+
+    else:
+        return binary_search(sorted_list, target, left=left, right=mid - 1)

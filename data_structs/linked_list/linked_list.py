@@ -240,30 +240,3 @@ class LinkedList:
         """
         self._head = self._tail = None
         self._nodes_counter = 0
-
-if __name__ == "__main__":
-    l = LinkedList()
-    l.append(1)
-    l.append(2)
-    l.prepend(0)
-    l.insert(3, 3)
-    l.insert(0, -1)
-    l.insert(2, 0.5)
-
-    l[0] = 1000
-
-    print(l.find_by_index(0))
-
-
-    print(l)
-    print(l.pop())  # 3
-    print(l.pop_front())
-    print(l[-1])
-    print(len(l))
-
-    print(l)
-    l.remove(1)
-    print(l)
-
-    l.clear()
-    print(l)
